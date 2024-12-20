@@ -10,7 +10,8 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-open class PersistentListSerializer<T>(elementSerializer: KSerializer<T>) : KSerializer<PersistentList<T>> {
+open class PersistentListSerializer<T>(elementSerializer: KSerializer<T>) :
+    KSerializer<PersistentList<T>> {
     private val listSerializer = ListSerializer(elementSerializer)
 
     override val descriptor: SerialDescriptor = listSerializer.descriptor
@@ -40,5 +41,6 @@ data class WeatherHistoryPreferences(
     val temp: Double,
     val iconUrl: String,
     val feelsLike: Double,
-    val condition: String
+    val condition: String,
+    val uv: Double
 )

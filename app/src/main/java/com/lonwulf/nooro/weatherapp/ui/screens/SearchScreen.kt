@@ -1,5 +1,6 @@
 package com.lonwulf.nooro.weatherapp.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
@@ -62,10 +64,13 @@ fun SearchScreen(modifier: Modifier = Modifier, navHostController: NavHostContro
 
     LaunchedEffect(apiState) {
         when (apiState) {
-            is GenericResultState.Loading -> {}
+            is GenericResultState.Loading -> {
+            }
+
             is GenericResultState.Empty -> {}
             is GenericResultState.Error -> {}
             is GenericResultState.Success -> {
+                Log.e("objjjj", weatherObject.toString())
                 weatherObject =
                     (apiState as GenericResultState.Success<WeatherModel>).result!!
             }

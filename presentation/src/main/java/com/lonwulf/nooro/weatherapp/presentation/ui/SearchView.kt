@@ -38,13 +38,12 @@ import kotlinx.coroutines.delay
 fun SearchBar(
     modifier: Modifier,
     onSearch: (String) -> Unit,
-    onClick: () -> Unit = {},
-    isSearching: (Boolean) -> Unit = {}
+    onClick: () -> Unit = {}
 ) {
     var searchQuery by remember { mutableStateOf("") }
     val keyBoardController = LocalSoftwareKeyboardController.current
     val interactionSource = remember { MutableInteractionSource() }
-    var isSearching by remember { mutableStateOf(false) }
+    var isQuerying by remember { mutableStateOf(false) }
     var lastSearchQuery by remember { mutableStateOf("") }
     val searchJob = rememberUpdatedState(onSearch)
 
@@ -52,10 +51,10 @@ fun SearchBar(
     LaunchedEffect(searchQuery) {
         if (searchQuery != lastSearchQuery) {
             lastSearchQuery = searchQuery
-            isSearching = true
-            delay(500L)
+            isQuerying = true
+            delay(5000L)
             searchJob.value(searchQuery)
-            isSearching = false
+            isQuerying = false
         }
     }
 
@@ -96,7 +95,7 @@ fun SearchBar(
                 if (searchQuery.isNotEmpty()) {
                     onSearch(searchQuery)
                 } else {
-                    searchQuery = ""
+                    searchQuery = " "
                 }
             }) {
                 Icon(
@@ -121,7 +120,6 @@ fun SearchBar(
             .clip(RoundedCornerShape(25.dp))
     )
 
-    if (isSearching) {
-//        CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
-    }
+    CircularProgressBar(isQuerying)
+
 }

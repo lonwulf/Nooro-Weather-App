@@ -113,7 +113,8 @@ fun HomeScreen(
                         humidity = pref.humidity,
                         condition = pref.condition,
                         feelsLike = pref.feelsLike,
-                        iconUrl = pref.iconUrl
+                        iconUrl = pref.iconUrl,
+                        uv = pref.uv
                     )
                 }
             }

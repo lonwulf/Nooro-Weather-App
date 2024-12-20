@@ -12,5 +12,5 @@ data class WeatherModel(
     val localTime:String? = null,
     val heatIndex:Double? = null,
     val feelsLike:Double? = null,
-    val uv:Int? = null
+    val uv:Double? = null
 )

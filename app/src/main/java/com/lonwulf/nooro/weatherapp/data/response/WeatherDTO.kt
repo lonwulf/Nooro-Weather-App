@@ -95,7 +95,7 @@ data class WeatherDTO(
         var gust_kph: Double? = null,
 
         @Json(name = "uv")
-        var uv: Int? = null
+        var uv: Double? = null
     ) {
         class Condition {
             @Json(name = "text")
@@ -105,7 +105,7 @@ data class WeatherDTO(
             var icon: String? = null
 
             @Json(name = "code")
-            var code: Int? = null
+            var code: Double? = null
         }
     }
 }
