@@ -86,7 +86,7 @@ fun HistoryScreen(modifier: Modifier = Modifier, navHostController: NavHostContr
                 .fillMaxSize()
                 .padding(10.dp)
         ) {
-            items(items = preferenceList) { prefs ->
+            items(items = preferenceList.reversed()) { prefs ->
                 ElevatedCard(
                     modifier = modifier
                         .fillMaxWidth()
@@ -122,7 +122,7 @@ fun HistoryScreen(modifier: Modifier = Modifier, navHostController: NavHostContr
                                 start.linkTo(parent.start, margin = 20.dp)
                             })
                         LoadImageFromUrl(
-                            url = prefs.iconUrl ?: "",
+                            url = "https:${prefs.iconUrl}",
                             ctx = LocalContext.current,
                             modifier = modifier
                                 .width(100.dp)
@@ -136,11 +136,11 @@ fun HistoryScreen(modifier: Modifier = Modifier, navHostController: NavHostContr
                 }
             }
         }
-    } ?: ShowEmptyData()
+    } ?: ShowEmptyHistoryData()
 }
 
 @Composable
-fun ShowEmptyData() {
+fun ShowEmptyHistoryData() {
     Row(
         modifier = Modifier.fillMaxSize(),
         horizontalArrangement = Arrangement.Center,

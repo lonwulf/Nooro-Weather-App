@@ -32,3 +32,25 @@
 - Android Studio Meerkat or Hedgehog
 - Gradle 8.0+
 - Kotlin 2.0
+
+## Architecture and Components
+- Modular app structure (core, presentation and app modules)
+- MVVM,
+- Jetpack compose,
+- DataStore for caching data,
+- Koin for DI,
+- Coil for image loading
+
+## Screenshots
+
+### Home Screen
+![Home Screen](./Screenshot_20241221_010904.png)
+
+### History Screen
+![History Screen](./Screenshot_20241221_010813.png)
+
+### Settings Screen
+![Settings Screen](./Screenshot_20241221_010218.png)
+
+### Search Screen
+![Search Screen]()

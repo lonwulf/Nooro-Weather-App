@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +29,7 @@ fun LoadImageFromUrl(
         if (url.isNotEmpty()) {
             data(url)
             size(Size.ORIGINAL)
+            crossfade(true)
         } else {
             data(getDrawable(ctx, defaultImg))
         }
@@ -38,7 +40,7 @@ fun LoadImageFromUrl(
         Image(
             painter = painter,
             contentDescription = null,
-            modifier = modifier.matchParentSize(),
+            modifier = modifier.fillMaxSize(),
             contentScale = contentScale
         )
 
@@ -48,7 +50,7 @@ fun LoadImageFromUrl(
                 Image(
                     painter = painter,
                     contentDescription = null,
-                    modifier = modifier.matchParentSize(),
+                    modifier = modifier.fillMaxSize(),
                     contentScale = contentScale
                 )
             }

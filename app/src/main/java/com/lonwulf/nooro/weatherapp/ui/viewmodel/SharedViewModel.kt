@@ -1,6 +1,5 @@
 package com.lonwulf.nooro.weatherapp.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lonwulf.nooro.weatherapp.core.util.GenericResultState
@@ -14,8 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import java.util.UUID
-import kotlin.random.Random
 
 class SharedViewModel(
     private val weatherForeCastUseCase: WeatherForeCastUseCase,
@@ -45,7 +42,7 @@ class SharedViewModel(
     }
 
     fun fetchAllHistory() = viewModelScope.launch(Dispatchers.IO) {
-        fetchHistoryFromCacheUseCase().onStart { setWeatherHistoryResult(GenericResultState.Loading)}
+        fetchHistoryFromCacheUseCase().onStart { setWeatherHistoryResult(GenericResultState.Loading) }
             .flowOn(Dispatchers.IO).collect {
                 setWeatherHistoryResult(GenericResultState.Success(it))
             }
@@ -63,7 +60,8 @@ class SharedViewModel(
                 temp = model.tempC ?: 0.0,
                 iconUrl = model.iconUrl ?: "",
                 feelsLike = model.feelsLike ?: 0.0,
-                condition = model.condition ?: ""
+                condition = model.condition ?: "",
+                uv = model.uv ?: 0.0
             )
         )
     }

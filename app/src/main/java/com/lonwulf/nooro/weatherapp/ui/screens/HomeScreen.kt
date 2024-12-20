@@ -39,6 +39,7 @@ import com.lonwulf.nooro.weatherapp.domain.model.WeatherHistoryPreferences
 import com.lonwulf.nooro.weatherapp.domain.model.WeatherModel
 import com.lonwulf.nooro.weatherapp.navigation.Destinations
 import com.lonwulf.nooro.weatherapp.navigation.NavComposable
+import com.lonwulf.nooro.weatherapp.presentation.ui.CircularProgressBar
 import com.lonwulf.nooro.weatherapp.presentation.ui.LoadImageFromUrl
 import com.lonwulf.nooro.weatherapp.presentation.ui.SearchBar
 import com.lonwulf.nooro.weatherapp.ui.theme.TextBlack
@@ -60,30 +61,22 @@ fun HomeScreen(
     navHostController: NavHostController,
     sharedViewModel: SharedViewModel = koinNavViewModel(),
 ) {
-    var weatherObject by remember { mutableStateOf<WeatherModel?>(null) }
-    val apiState by sharedViewModel.weatherForeCastStateFlow.collectAsState()
     var preferenceList by remember { mutableStateOf<List<WeatherHistoryPreferences>>(emptyList()) }
     val historyFetchState by sharedViewModel.weatherPreferencesList.collectAsState()
+    var isLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         sharedViewModel.fetchAllHistory()
     }
 
-    LaunchedEffect(apiState, historyFetchState) {
-        when (apiState) {
-            is GenericResultState.Loading -> {}
-            is GenericResultState.Empty -> {}
-            is GenericResultState.Error -> {}
-            is GenericResultState.Success -> {
-                weatherObject = (apiState as GenericResultState.Success<WeatherModel>).result!!
-            }
-        }
+    LaunchedEffect(historyFetchState) {
 
         when (historyFetchState) {
-            is GenericResultState.Loading -> {}
+            is GenericResultState.Loading ->  isLoading = true
             is GenericResultState.Empty -> {}
-            is GenericResultState.Error -> {}
+            is GenericResultState.Error -> { isLoading = false}
             is GenericResultState.Success -> {
+                isLoading = false
                 preferenceList =
                     (historyFetchState as GenericResultState.Success<List<WeatherHistoryPreferences>>).result!!
             }
@@ -94,6 +87,8 @@ fun HomeScreen(
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (searchField, degreeValue, placeholderTxt, img, locationText, arrowIcn, weatherTile) = createRefs()
         val horizontalGuide = createGuidelineFromBottom(0.4f)
+
+        CircularProgressBar(isLoading)
 
         SearchBar(modifier = modifier.constrainAs(searchField) {
             top.linkTo(parent.top, 30.dp)
@@ -118,8 +113,7 @@ fun HomeScreen(
                     )
                 }
             }
-
-            else -> weatherObject
+            else -> null
         }
 
         dataToDisplay.takeIf { it != null }?.let {

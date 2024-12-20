@@ -13,9 +13,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -79,7 +82,14 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(snackbarHost = { SnackbarHost(snackBarHostState) }, topBar = {
                     Column {
-                        Toolbar(title = "Nooro Weather App")
+                        val title =
+                            if (currentDestination?.route == TopLevelDestinations.HomeScreen.route) "Nooro Weather App" else currentDestination?.route
+                                ?: ""
+                        Toolbar(
+                            title = title,
+                            navHostController = navController,
+                            currentDestination = currentDestination
+                        )
                         if (isConnected.not()) {
                             ConnectivityStrip()
                         }
@@ -213,8 +223,25 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun Toolbar(title: String) {
+    private fun Toolbar(
+        title: String,
+        navHostController: NavHostController,
+        currentDestination: NavDestination?
+    ) {
         TopAppBar(
+            navigationIcon = {
+                if (currentDestination?.route == Destinations.SearchScreen.route) {
+                    IconButton(onClick = {
+                        navHostController.navigateUp()
+                    }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
+                    }
+                }
+            },
             title = { Text(text = title) }, actions = {},
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = BottomBarSelectedColor,

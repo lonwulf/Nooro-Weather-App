@@ -31,7 +31,8 @@ class DataStoreRepositoryImpl(private val context: Context) : DataStoreRepositor
                         temp = weatherItem.temp,
                         iconUrl = weatherItem.iconUrl,
                         feelsLike = weatherItem.feelsLike,
-                        condition = weatherItem.condition
+                        condition = weatherItem.condition,
+                        uv = weatherItem.uv
                     )
                 )
             })

@@ -1,6 +1,5 @@
 package com.lonwulf.nooro.weatherapp.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
@@ -70,7 +68,6 @@ fun SearchScreen(modifier: Modifier = Modifier, navHostController: NavHostContro
             is GenericResultState.Empty -> {}
             is GenericResultState.Error -> {}
             is GenericResultState.Success -> {
-                Log.e("objjjj", weatherObject.toString())
                 weatherObject =
                     (apiState as GenericResultState.Success<WeatherModel>).result!!
             }
@@ -78,7 +75,7 @@ fun SearchScreen(modifier: Modifier = Modifier, navHostController: NavHostContro
     }
 
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
-        val (searchField, weatherTile) = createRefs()
+        val (searchField, weatherTile,placeholderTxt) = createRefs()
 
         SearchBar(modifier = modifier.constrainAs(searchField) {
             top.linkTo(parent.top, 30.dp)
@@ -91,7 +88,7 @@ fun SearchScreen(modifier: Modifier = Modifier, navHostController: NavHostContro
             vm.fetchWeatherForeCast(it)
         })
 
-        weatherObject?.let { model ->
+        weatherObject.takeIf { it != null }?.let { model ->
             ElevatedCard(
                 modifier = modifier
                     .wrapContentHeight()
@@ -138,7 +135,7 @@ fun SearchScreen(modifier: Modifier = Modifier, navHostController: NavHostContro
                             style = MaterialTheme.typography.displayMedium,
                             text = "$it °",
                             modifier = modifier.constrainAs(temp) {
-                                bottom.linkTo(img.bottom, margin = 10.dp)
+                                top.linkTo(name.bottom, margin = 10.dp)
                                 start.linkTo(name.start)
                             })
                     }
@@ -149,25 +146,33 @@ fun SearchScreen(modifier: Modifier = Modifier, navHostController: NavHostContro
                             modifier = modifier
                                 .size(100.dp)
                                 .constrainAs(img) {
-                                    end.linkTo(checkIcn.end, 10.dp)
-                                    top.linkTo(parent.top)
-                                    bottom.linkTo(parent.bottom)
+                                    end.linkTo(checkIcn.start, 10.dp)
+                                    top.linkTo(name.top)
+                                    bottom.linkTo(temp.bottom)
+                                    height = Dimension.fillToConstraints
                                 })
                     }
                     if (isClicked) {
                         Image(
                             painter = painterResource(com.lonwulf.nooro.weatherapp.presentation.R.drawable.check_circle_52dp),
                             contentDescription = "",
-                            modifier = modifier.constrainAs(checkIcn) {
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                                end.linkTo(parent.end, 5.dp)
-                            })
+                            modifier = modifier
+                                .size(20.dp)
+                                .constrainAs(checkIcn) {
+                                    top.linkTo(parent.top)
+                                    bottom.linkTo(parent.bottom)
+                                    end.linkTo(parent.end, 5.dp)
+                                })
                     }
                     Spacer(modifier = modifier.height(10.dp))
                 }
             }
-        }
+        } ?: ShowEmptyData(modifier.constrainAs(placeholderTxt) {
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+            top.linkTo(parent.top)
+            bottom.linkTo(parent.bottom)
+        })
     }
 
 }
