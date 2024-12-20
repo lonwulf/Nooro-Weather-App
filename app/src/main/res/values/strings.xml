@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Weather App</string>
+    <string name="no_internet">No internet</string>
+    <string name="humidity">Humidity</string>
+    <string name="uv">UV</string>
+    <string name="feels_like">Feels Like</string>
+    <string name="no_city_selected">No City Selected</string>
+    <string name="no_data">Entries not found</string>
+    <string name="please_search">Please Search For A City</string>
+    <string name="clear_cache">Clear all cache</string>
+
+</resources>
