@@ -52,5 +52,8 @@
 ### Settings Screen
 ![Settings Screen](./Screenshot_20241221_133806.png)
 
+### No Internet scenario
+![No internet](./Screenshot_20241221_140740.png)
+
 ### Search Screen
 ![Search Screen]()
