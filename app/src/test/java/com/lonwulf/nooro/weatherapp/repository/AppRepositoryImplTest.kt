@@ -1,4 +1,4 @@
-package com.lonwulf.nooro.weatherapp
+package com.lonwulf.nooro.weatherapp.repository
 
 import com.lonwulf.nooro.weatherapp.core.util.APIResult
 import com.lonwulf.nooro.weatherapp.core.util.HttpResult

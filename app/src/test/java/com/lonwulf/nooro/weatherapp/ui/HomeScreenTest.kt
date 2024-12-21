@@ -1,4 +1,4 @@
-package com.lonwulf.nooro.weatherapp
+package com.lonwulf.nooro.weatherapp.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
