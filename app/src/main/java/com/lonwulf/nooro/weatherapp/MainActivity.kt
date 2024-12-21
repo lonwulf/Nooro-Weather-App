@@ -139,7 +139,7 @@ class MainActivity : ComponentActivity() {
         ) {
             val (txt, box) = createRefs()
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(10.dp)
                     .background(colorResource(R.color.white))
@@ -150,18 +150,19 @@ class MainActivity : ComponentActivity() {
                         bottom.linkTo(parent.bottom)
                         height = Dimension.fillToConstraints
                         width = Dimension.fillToConstraints
-                    })
+                    }
+            )
             Text(
                 text = stringResource(R.string.no_internet),
                 color = ErrorRed,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = modifier.constrainAs(txt) {
+                modifier = Modifier.constrainAs(txt) {
                     top.linkTo(box.top)
+                    bottom.linkTo(box.bottom)
                     start.linkTo(box.start)
                     end.linkTo(box.end)
-                    bottom.linkTo(box.bottom)
-                    width = Dimension.fillToConstraints
-                })
+                }
+            )
         }
     }
 
