@@ -47,10 +47,10 @@
 ![Home Screen](./Screenshot_20241221_010904.png)
 
 ### History Screen
-![History Screen](./Screenshot_20241221_010813.png)
+![History Screen](./Screenshot_20241221_133735.png)
 
 ### Settings Screen
-![Settings Screen](./Screenshot_20241221_010218.png)
+![Settings Screen](./Screenshot_20241221_133806.png)
 
 ### Search Screen
 ![Search Screen]()

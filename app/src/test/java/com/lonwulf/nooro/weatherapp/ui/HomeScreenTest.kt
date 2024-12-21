@@ -33,7 +33,6 @@ class HomeScreenTest {
     fun setup() {
         mockViewModel = Mockito.mock(SharedViewModel::class.java)
         navHostController = mock<NavHostController>()
-//        navHostController = TestNavHostController(composeTestRule.activity)
     }
 
     @Test
@@ -54,13 +53,12 @@ class HomeScreenTest {
 
     @Test
     fun testHomeScreenDisplaysData() {
-        // Mock success state with a weather history list
         val mockHistory = listOf(
             WeatherHistoryPreferences(
                 name = "Nairobi",
                 humidity = 65,
                 temp = 23.0,
-                iconUrl = "url/to/icon",
+                iconUrl = "//cdn.weatherapi.com/weather/64x64/day/113.png",
                 feelsLike = 24.5,
                 condition = "Cloudy",
                 uv = 4.4
@@ -69,7 +67,6 @@ class HomeScreenTest {
         val successState = MutableStateFlow(GenericResultState.Success(mockHistory))
         whenever(mockViewModel.weatherPreferencesList).thenReturn(successState)
 
-        // Launch the HomeScreen
         composeTestRule.setContent {
             HomeScreen(
                 navHostController = navHostController,
@@ -77,7 +74,6 @@ class HomeScreenTest {
             )
         }
 
-        // Verify that data is displayed correctly
         composeTestRule.onNodeWithText("Nairobi").assertIsDisplayed()
         composeTestRule.onNodeWithText("23.0°").assertIsDisplayed()
     }
@@ -110,7 +106,7 @@ class HomeScreenTest {
         )
 
         whenever(mockViewModel.weatherPreferencesList).thenReturn(emptyStateFlow)
-        whenever(mockViewModel.fetchAllHistory()).then { Unit }  // or just mock the void method
+        whenever(mockViewModel.fetchAllHistory()).then { Unit }
 
         // When
         composeTestRule.setContent {
@@ -121,7 +117,7 @@ class HomeScreenTest {
         }
 
         // Then
-        composeTestRule.onNodeWithTag("search_bar").performClick()
+        composeTestRule.onNodeWithTag("searchField").performClick()
         assertEquals(Destinations.SearchScreen.route, navHostController.currentDestination?.route)
     }
 
