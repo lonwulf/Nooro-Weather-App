@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -39,6 +41,7 @@ import com.lonwulf.nooro.weatherapp.presentation.ui.SearchBar
 import com.lonwulf.nooro.weatherapp.ui.theme.BottomBarBgGray
 import com.lonwulf.nooro.weatherapp.ui.theme.TextBlack
 import com.lonwulf.nooro.weatherapp.ui.viewmodel.SharedViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.navigation.koinNavViewModel
 
 
@@ -47,18 +50,23 @@ class SearchScreenComposable : NavComposable {
     override fun Composable(
         navHostController: NavHostController, snackbarHostState: SnackbarHostState
     ) {
-        SearchScreen(navHostController = navHostController)
+        SearchScreen(navHostController = navHostController, snackbarHostState = snackbarHostState)
     }
 }
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier, navHostController: NavHostController) {
+fun SearchScreen(
+    modifier: Modifier = Modifier,
+    navHostController: NavHostController,
+    snackbarHostState: SnackbarHostState
+) {
     val parentEntry =
         remember { navHostController.getBackStackEntry(TopLevelDestinations.HomeScreen.route) }
     val vm = koinNavViewModel<SharedViewModel>(viewModelStoreOwner = parentEntry)
     var weatherObject by remember { mutableStateOf<WeatherModel?>(null) }
     val apiState by vm.weatherForeCastStateFlow.collectAsState()
     var isClicked by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(apiState) {
         when (apiState) {
@@ -66,7 +74,13 @@ fun SearchScreen(modifier: Modifier = Modifier, navHostController: NavHostContro
             }
 
             is GenericResultState.Empty -> {}
-            is GenericResultState.Error -> {}
+            is GenericResultState.Error -> scope.launch {
+                snackbarHostState.showSnackbar(
+                    message = (apiState as GenericResultState.Error).msg ?: "something went wrong",
+                    duration = SnackbarDuration.Short
+                )
+            }
+
             is GenericResultState.Success -> {
                 weatherObject =
                     (apiState as GenericResultState.Success<WeatherModel>).result!!
@@ -75,7 +89,7 @@ fun SearchScreen(modifier: Modifier = Modifier, navHostController: NavHostContro
     }
 
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
-        val (searchField, weatherTile,placeholderTxt) = createRefs()
+        val (searchField, weatherTile, placeholderTxt) = createRefs()
 
         SearchBar(modifier = modifier.constrainAs(searchField) {
             top.linkTo(parent.top, 30.dp)

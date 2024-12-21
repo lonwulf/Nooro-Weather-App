@@ -16,12 +16,16 @@ loggingInterceptor = "4.12.0"
 moshi = "1.15.1"
 constraintLayout = "1.1.0"
 coil = "2.7.0"
-koin = "3.5.6"
-dataStore= "1.1.1"
+koin = "4.0.0"
+dataStore = "1.1.1"
 kotlinCollections = "0.3.8"
 kotlinSerialization = "1.7.3"
 ktSerializationPlugin = "2.0.0"
-
+mockitoCore = "5.14.1"
+mockitoKotlin = "5.4.0"
+coroutineTest = "1.9.0"
+composeJUnit = "1.7.6"
+navigation = "2.8.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,9 +44,9 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-dataStore = {group = "androidx.datastore", name = "datastore", version.ref = "dataStore"}
-kotlin-collections= {group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinCollections"}
-kotlin-serialization = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization"}
+dataStore = { group = "androidx.datastore", name = "datastore", version.ref = "dataStore" }
+kotlin-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinCollections" }
+kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
 moshi = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
@@ -53,13 +57,20 @@ koin = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 koin-compose-navigation = { group = "io.insert-koin", name = "koin-androidx-compose-navigation", version.ref = "koin" }
 
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoCore" }
+mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutineTest" }
+compose-junit-test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "composeJUnit" }
+koin-test = {group = "io.insert-koin", name = "koin-test", version.ref = "koin"}
+navigation-test = {group ="androidx.navigation", name = "navigation-testing", version.ref = "navigation"}
+
 ##plugins
-kt-serialization = {module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "ktSerializationPlugin"}
+kt-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "ktSerializationPlugin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-kt-serialization = {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "ktSerializationPlugin"}
+kt-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "ktSerializationPlugin" }
 
